@@ -1,7 +1,7 @@
 <?php
 
 /**
-* @package manifest file for Hide the content of [code] tags from guests
+* @package manifest file for Live clock in header
 * @version 1.1
 * @author Joker (http://www.simplemachines.org/community/index.php?action=profile;u=226111)
 * @copyright Copyright (c) 2012, Siddhartha Gupta
@@ -72,16 +72,27 @@ function template_hc_admin_board_setting_panel() {
 		<form action="'. $scripturl .'?action=admin;area=restrictposts;sa=savepostsettings" method="post" accept-charset="UTF-8">
 			<div class="windowbg2">
 				<span class="topslice"><span></span></span>';
+				//echo $category['name'] . ' : ' . $board['board_name'] . '<br />';
 
-				
+				//echo json_encode($context['hc_board_setting_data']);
 				foreach($context['hc_board_setting_data'] as $category_key => $category) {
-					echo '<div class="hc_category" style="padding: 0 15px;">';
-					echo '<p><a href="#">', $category['name'], '</a></p>';
+					echo '
+					<div class="hc_category" style="padding: 0 15px;">';
+
+					echo '
+						<p style="padding: 0; margin: 4px 0;">
+							<a href="#">', $category['name'], '</a>
+						</p>';
+
 					foreach($category['boards'] as $board_key => $board) {
-						echo '<span>', $board['board_name'], '</span>';
+						echo '
+						<span>', $board['board_name'], '</span>
+						<input type="checkbox" id="', $board['id_board'], '" name="', $board['id_board'], '" value="', $board['id_board'],'" checked="checked" class="input_check">';
 						//echo $category['name'] . ' : ' . $board['board_name'] . '<br />';
 					}
-					echo '</div>';
+
+					echo '
+					</div>';
 				}
 
 				echo '
