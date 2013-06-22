@@ -41,7 +41,7 @@ function HideCodeTagsAdminPanel($return_config = false) {
 	loadLanguage('HideCodeTags');
 
 	$context['page_title'] = $txt['hc_admin_panel'];
-	$default_action_func = 'hC_boardSettings';
+	$default_action_func = 'hc_boardSettings';
 
 	$context[$context['admin_menu_name']]['tab_data'] = array(
 		'title' => $txt['hc_admin_panel'],
@@ -59,7 +59,7 @@ function HideCodeTagsAdminPanel($return_config = false) {
 	$context[$context['admin_menu_name']]['tab_data']['active_button'] = isset($_REQUEST['sa']) ? $_REQUEST['sa'] : 'boardsettings';
 
 	$subActions = array(
-		'boardsettings' => 'hC_boardSettings',
+		'boardsettings' => 'hc_boardSettings',
 		'saveboardsettings' => 'hc_saveBoardSettings',
 		'groupsettings' => 'hC_groupSettings',
 		'savegroupsettings' => 'hc_saveGroupSettings',
@@ -71,7 +71,7 @@ function HideCodeTagsAdminPanel($return_config = false) {
 	$default_action_func();
 }
 
-function hC_boardSettings() {
+function hc_boardSettings() {
 	global $txt, $context, $sourcedir;
 
 	/* I can has Adminz? */
@@ -80,11 +80,7 @@ function hC_boardSettings() {
 	loadtemplate('HideCodeTags');
 
 	require_once($sourcedir . '/Subs-HideCodeTags.php');
-	$context['hc_board_setting_data'] = hc_getAllBoard();
-
-	$general_settings = array(
-		array('check', 'hc_board_ids'),
-	);
+	$context['hc_board_setting_data'] = hc_getAllBoard(true);
 
 	$context['page_title'] = $txt['hc_admin_panel'];
 	$context['sub_template'] = 'hc_admin_board_setting_panel';
@@ -92,7 +88,7 @@ function hC_boardSettings() {
 	$context['hide_code']['tab_desc'] = $txt['hc_board_settings_desc'];
 }
 
-function hc_saveBasicSettings() {
+function hc_saveBoardSettings() {
 	global $sourcedir;
 
 	isAllowedTo('admin_forum');
@@ -100,12 +96,10 @@ function hc_saveBasicSettings() {
 
 	if (isset($_POST['submit'])) {
 		checkSession();
+		$_POST['hc_board_ids'] = implode(',', $_POST['hc_board_ids']);
 
 		$general_settings = array(
-			array('check', 'lc_mod_enable'),
-			array('check', 'lc_show_timezone_dropdown'),
-			array('check', 'lc_24_hr_format'),
-			array('check', 'lc_show_date'),
+			array('text', 'hc_board_ids')
 		);
 
 		require_once($sourcedir . '/ManageServer.php');

@@ -33,8 +33,8 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-function hc_getAllBoard() {
-    global $smcFunc;
+function hc_getAllBoard($checkSelected = false) {
+    global $smcFunc, $modSettings;
 
     $request = $smcFunc['db_query']('', '
 		SELECT b.id_board, b.board_order, b.name as board_name, c.id_cat, c.name AS cat_name
@@ -47,6 +47,10 @@ function hc_getAllBoard() {
 	);
 
 	$data = array();
+    if(isset($checkSelected)) {
+        $boardSelectedArray = explode(',', $modSettings['hc_board_ids']);
+    }
+
 	while ($row = $smcFunc['db_fetch_assoc']($request)) {
         if(!isset($data[$row['id_cat']])) {
             $data[$row['id_cat']] = array(
@@ -57,10 +61,31 @@ function hc_getAllBoard() {
             'id_board' => $row['id_board'],
             'board_name' => $row['board_name'],
         );
+
+        if(isset($checkSelected)) {
+            $needToHide = checkIfBoardSelected($row['id_board'], $boardSelectedArray);
+            if(isset($needToHide) && !empty($needToHide))
+                $data[$row['id_cat']]['boards'][$row['id_board']]['is_selected'] = true;
+            else
+                $data[$row['id_cat']]['boards'][$row['id_board']]['is_selected'] = false;
+        }
 	}
 	$smcFunc['db_free_result']($request);
 
 	return $data;
+}
+
+
+//Few utils for admin itself
+function checkIfBoardSelected($boardId, $boardSelectedArray) {
+    global $modSettings;
+
+    if(!is_array($boardSelectedArray) || empty($boardSelectedArray)) {
+        $boardSelectedArray = explode(',', $modSettings['hc_board_ids']);
+    }
+
+    if(in_array($boardId, $boardSelectedArray)) return true;
+    else return false;
 }
 
 ?>

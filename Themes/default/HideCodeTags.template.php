@@ -63,18 +63,16 @@ function template_rp_admin_info() {
 }
 
 function template_hc_admin_board_setting_panel() {
-	global $context, $txt;
+	global $context, $txt, $scripturl;
 
 	template_rp_admin_info();
 
 	echo '
 	<div id="admincenter" class="hide_code">
-		<form action="'. $scripturl .'?action=admin;area=restrictposts;sa=savepostsettings" method="post" accept-charset="UTF-8">
+		<form action="'. $scripturl .'?action=admin;area=hidecodetags;sa=saveboardsettings" method="post" accept-charset="UTF-8">
 			<div class="windowbg2">
 				<span class="topslice"><span></span></span>';
-				//echo $category['name'] . ' : ' . $board['board_name'] . '<br />';
 
-				//echo json_encode($context['hc_board_setting_data']);
 				foreach($context['hc_board_setting_data'] as $category_key => $category) {
 					echo '
 					<div class="hc_category" style="padding: 0 15px;">';
@@ -87,8 +85,7 @@ function template_hc_admin_board_setting_panel() {
 					foreach($category['boards'] as $board_key => $board) {
 						echo '
 						<span>', $board['board_name'], '</span>
-						<input type="checkbox" id="', $board['id_board'], '" name="', $board['id_board'], '" value="', $board['id_board'],'" checked="checked" class="input_check">';
-						//echo $category['name'] . ' : ' . $board['board_name'] . '<br />';
+						<input type="checkbox" id="', $board['id_board'], '" name="hc_board_ids[]"', ($board['is_selected'] ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />';
 					}
 
 					echo '
@@ -96,6 +93,7 @@ function template_hc_admin_board_setting_panel() {
 				}
 
 				echo '
+				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 				<input type="submit" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 	
 				echo '

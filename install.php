@@ -38,9 +38,9 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 elseif (!defined('SMF'))
 	die('<b>Error:</b> Cannot uninstall - please verify you put this in the same place as SMF\'s index.php.');
 
-global $sourcedir;
+global $sourcedir, $modSettings;
 
-updateSettings(array('hc_board_ids' => 0));
+updateSettings(array('hc_board_ids' => ' '));
 
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTagsHooks.php');
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTags.php');

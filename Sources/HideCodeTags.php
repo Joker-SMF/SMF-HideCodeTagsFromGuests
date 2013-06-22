@@ -33,15 +33,15 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-function needToHide($boardId) {
+function needToHide($boardId, $setting) {
     global $context, $modSettings;
 
     if($context['user']['is_logged']) return false;
 
-    $boards_to_hide = explode(',', $modSettings['hide_code_tag']);
+	$boards_to_hide = explode(',', $modSettings[$setting]);
 
-    if(in_array($boardId, $boards_to_hide)) {return true;}
-    else {return false;}
+    if(in_array($boardId, $boards_to_hide)) return true;
+    else return false;
 }
 
 ?>

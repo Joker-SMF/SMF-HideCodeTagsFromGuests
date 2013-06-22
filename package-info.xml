@@ -16,8 +16,9 @@
 		<require-file name="Themes/default/HideCodeTags.template.php" destination="$themedir">Admin template</require-file>
 		<require-file name="Themes/default/languages/HideCodeTags.english.php" destination="$languagedir">All language Strings</require-file>
 		<require-file name="Themes/default/scripts/HideCodeTags.js" destination="$themedir/scripts">JS file of mod</require-file>
-		<database>install.php</database>
+		<code>install.php</code>
 		<modification>Modification.xml</modification>
+		<redirect url="?action=admin;area=hidecodetags" type="inline">Please stand by while you are being redirected to this modification's configuration settings.</redirect>
 	</install>
 
 	<uninstall for="2.0 - 2.0.99">
