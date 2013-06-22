@@ -40,7 +40,7 @@ elseif (!defined('SMF'))
 
 global $sourcedir, $modSettings;
 
-updateSettings(array('hc_board_ids' => ' ', 'hc_group_ids' => ''));
+updateSettings(array('hc_board_ids' => ' ', 'hc_group_ids' => ' '));
 
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTagsHooks.php');
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTags.php');

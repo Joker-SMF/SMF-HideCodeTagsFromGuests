@@ -75,17 +75,19 @@ function template_hc_admin_board_setting_panel() {
 
 				foreach($context['hc_board_setting_data'] as $category_key => $category) {
 					echo '
-					<div class="hc_category" style="padding: 0 15px;">';
+					<div class="hc_category" style="padding: 0 15px; overflow: hidden; margin-bottom: 15px;">';
 
 					echo '
-						<p style="padding: 0; margin: 4px 0;">
-							<a href="#">', $category['name'], '</a>
+						<p style="padding: 0; margin: 4px 0 5px; font-weight: bold;">
+							<a style="padding: 2px; background: #fff; border: 1px solid #346; border-radius: 5px;" href="javascript:void(0)" id="', $category_key, '" onclick="selectBoards([', implode(', ', array_keys($category['boards'])), '], ', $category_key, '); return false;">', $category['name'], '</a>
 						</p>';
 
 					foreach($category['boards'] as $board_key => $board) {
 						echo '
-						<span>', $board['board_name'], '</span>
-						<input type="checkbox" id="', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />';
+						<div style="margin-left: 10px;">
+							<span>', $board['board_name'], '</span>
+							<input type="checkbox" id="board_', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />
+						</div>';
 					}
 
 					echo '
@@ -94,7 +96,7 @@ function template_hc_admin_board_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<input type="submit" style="margin-left: 15px;" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>
@@ -103,6 +105,36 @@ function template_hc_admin_board_setting_panel() {
 		</form>
 	</div>
 	<br class="clear">';
+
+	echo '
+	<script type="text/javascript"><!-- // --><![CDATA[
+		if(!Array.indexOf){
+			Array.prototype.indexOf = function(input) {
+				for(var i = 0; i < this.length; i++) {
+					if(this[i] == input) {
+						return i;
+					}
+				}
+				return -1;
+			}
+		}
+
+		function selectBoards(ids, catId) {
+			var isChecked = true;
+
+			for (i = 0; i < ids.length; i++) {
+				if(document.getElementById("board_" + ids[i]).checked == true && isChecked) {
+					isChecked = true;
+				} else {
+					isChecked = false;
+				}
+			}
+			for (i = 0; i < ids.length; i++) {
+				if(!isChecked) document.getElementById("board_" + ids[i]).checked = true;
+				else document.getElementById("board_" + ids[i]).checked = false;
+			}
+		}
+	// ]]></script>';
 }
 
 function template_hc_admin_group_setting_panel() {
@@ -130,7 +162,7 @@ function template_hc_admin_group_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<input type="submit" style="margin-left: 15px;" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>
