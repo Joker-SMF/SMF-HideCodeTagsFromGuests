@@ -85,8 +85,44 @@ function template_hc_admin_board_setting_panel() {
 					foreach($category['boards'] as $board_key => $board) {
 						echo '
 						<span>', $board['board_name'], '</span>
-						<input type="checkbox" id="', $board['id_board'], '" name="hc_board_ids[]"', ($board['is_selected'] ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />';
+						<input type="checkbox" id="', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />';
 					}
+
+					echo '
+					</div>';
+				}
+
+				echo '
+				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+				<input type="submit" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+	
+				echo '
+				<span class="botslice"><span></span></span>
+			</div>
+	
+		</form>
+	</div>
+	<br class="clear">';
+}
+
+function template_hc_admin_group_setting_panel() {
+	global $context, $txt, $scripturl;
+
+	template_rp_admin_info();
+
+	echo '
+	<div id="admincenter" class="hide_code">
+		<form action="'. $scripturl .'?action=admin;area=hidecodetags;sa=savegroupsettings" method="post" accept-charset="UTF-8">
+			<div class="windowbg2">
+				<span class="topslice"><span></span></span>';
+
+				foreach($context['hide_code_tag']['groups'] as $group_key => $group) {
+					echo '
+					<div class="hc_category" style="padding: 0 15px;">';
+
+						echo '
+						<input type="checkbox" id="', $group['id_group'], '" name="hc_group_ids[]"', (isset($group['is_selected']) && !empty($group['is_selected']) ? ' checked="checked"' : ''), ' value="', $group['id_group'],'" class="input_check" />
+						<span>', $group['group_name'], '</span>';
 
 					echo '
 					</div>';

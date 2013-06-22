@@ -48,7 +48,7 @@ function hc_getAllBoard($checkSelected = false) {
 
 	$data = array();
     if(isset($checkSelected)) {
-        $boardSelectedArray = explode(',', $modSettings['hc_board_ids']);
+        $boardSelectedArray = isset($modSettings['hc_board_ids']) && !empty($modSettings['hc_board_ids']) ? explode(',', $modSettings['hc_board_ids']) : array();
     }
 
 	while ($row = $smcFunc['db_fetch_assoc']($request)) {
@@ -63,8 +63,8 @@ function hc_getAllBoard($checkSelected = false) {
         );
 
         if(isset($checkSelected)) {
-            $needToHide = checkIfBoardSelected($row['id_board'], $boardSelectedArray);
-            if(isset($needToHide) && !empty($needToHide))
+            $needToHide = checkIfIdExist($row['id_board'], $boardSelectedArray);
+            if(!empty($needToHide))
                 $data[$row['id_cat']]['boards'][$row['id_board']]['is_selected'] = true;
             else
                 $data[$row['id_cat']]['boards'][$row['id_board']]['is_selected'] = false;
@@ -73,19 +73,6 @@ function hc_getAllBoard($checkSelected = false) {
 	$smcFunc['db_free_result']($request);
 
 	return $data;
-}
-
-
-//Few utils for admin itself
-function checkIfBoardSelected($boardId, $boardSelectedArray) {
-    global $modSettings;
-
-    if(!is_array($boardSelectedArray) || empty($boardSelectedArray)) {
-        $boardSelectedArray = explode(',', $modSettings['hc_board_ids']);
-    }
-
-    if(in_array($boardId, $boardSelectedArray)) return true;
-    else return false;
 }
 
 ?>
