@@ -96,7 +96,7 @@ function hc_saveBoardSettings() {
 
 	if (isset($_POST['submit'])) {
 		checkSession();
-		$_POST['hc_board_ids'] = implode(',', $_POST['hc_board_ids']);
+		$_POST['hc_board_ids'] = isset($_POST['hc_board_ids']) ? implode(',', $_POST['hc_board_ids']) : ' ';
 
 		$general_settings = array(
 			array('text', 'hc_board_ids')
@@ -127,7 +127,7 @@ function hc_groupSettings() {
 	unset($context['hide_code_tag']['groups'][3]);
 	unset($context['hide_code_tag']['groups'][1]);
 
-	$data = isset($modSettings['hc_group_ids']) && !empty($modSettings['hc_group_ids']) ? explode(',', $modSettings['hc_group_ids']) : array();
+	$data = isset($modSettings['hc_group_ids']) ? explode(',', $modSettings['hc_group_ids']) : array();
 	foreach($context['hide_code_tag']['groups'] as $key => $group) {
 		$isGroupSelected = checkIfIdExist($group['id_group'], $data);
 		if(!empty($isGroupSelected))
@@ -150,7 +150,7 @@ function hc_saveGroupSettings() {
 
 	if (isset($_POST['submit'])) {
 		checkSession();
-		$_POST['hc_group_ids'] = implode(',', $_POST['hc_group_ids']);
+		$_POST['hc_group_ids'] = isset($_POST['hc_group_ids']) ? implode(',', $_POST['hc_group_ids']) : ' ';
 
 		$general_settings = array(
 			array('text', 'hc_group_ids')
@@ -170,8 +170,12 @@ function checkIfIdExist($itemId, $dataArray, $settingToCheck = null) {
         $dataArray = explode(',', $modSettings[$settingToCheck]);
     }
 
-	if(empty($dataArray)) return false;
-    elseif(in_array($itemId, $dataArray)) return true;
+	foreach ($dataArray as $key => $value)
+		$dataArray[$key] = $value !== ' ' ? (int) $value : ''	;
+
+	$itemId = (int) $itemId;
+
+	if(in_array($itemId, $dataArray, TRUE)) return true;
     else return false;
 }
 
