@@ -53,8 +53,8 @@ function HideCodeTagsAdminPanel($return_config = false) {
 				'url' => 'boardsettings',
 			),
 			'groupsettings' => array(
-				'label' => $txt['hc_group_settings'],
-				'url' => 'groupsettings',
+				'label' => $txt['hc_basic_settings'],
+				'url' => 'basicsettings',
 			),
 		),
 	);
@@ -63,8 +63,8 @@ function HideCodeTagsAdminPanel($return_config = false) {
 	$subActions = array(
 		'boardsettings' => 'hc_boardSettings',
 		'saveboardsettings' => 'hc_saveBoardSettings',
-		'groupsettings' => 'hc_groupSettings',
-		'savegroupsettings' => 'hc_saveGroupSettings',
+		'basicsettings' => 'hc_basicSettings',
+		'savebasicsettings' => 'hc_saveBasicSettings',
 	);
 
 	//wakey wakey, call the func you lazy
@@ -110,41 +110,28 @@ function hc_saveBoardSettings() {
 	}
 }
 
-function hc_groupSettings() {
+function hc_basicSettings() {
 	global $txt, $context, $sourcedir, $modSettings;
 
 	/* I can has Adminz? */
 	isAllowedTo('admin_forum');
 	loadLanguage('HideCodeTags');
 	loadtemplate('HideCodeTags');
-
 	require_once($sourcedir . '/ManageServer.php');
 
-	require_once($sourcedir . '/Subs-Membergroups.php');
-	$context['hide_code_tag']['groups'][0] = array(
-		'id_group' => 0,
-		'group_name' => $txt['hc_regular_members'],
+	$general_settings = array(
+		array('check', 'hc_mod_enable'),
+		array('large_text', 'hc_custom_message'),
 	);
-	$context['hide_code_tag']['groups'] += list_getMembergroups(null, null, 'id_group', 'regular');
-	unset($context['hide_code_tag']['groups'][3]);
-	unset($context['hide_code_tag']['groups'][1]);
-
-	$data = isset($modSettings['hc_group_ids']) ? explode(',', $modSettings['hc_group_ids']) : array();
-	foreach($context['hide_code_tag']['groups'] as $key => $group) {
-		$isGroupSelected = checkIfIdExist($group['id_group'], $data);
-		if(!empty($isGroupSelected))
-            $context['hide_code_tag']['groups'][$key]['is_selected'] = true;
-		else
-			$context['hide_code_tag']['groups'][$key]['is_selected'] = false;
-	}
 
 	$context['page_title'] = $txt['hc_admin_panel'];
-	$context['sub_template'] = 'hc_admin_group_setting_panel';
-	$context['hide_code']['tab_name'] = $txt['hc_group_settings'];
-	$context['hide_code']['tab_desc'] = $txt['hc_group_settings_desc'];
+	$context['sub_template'] = 'hc_admin_basic_setting_panel';
+	$context['hide_code']['tab_name'] = $txt['hc_basic_settings'];
+	$context['hide_code']['tab_desc'] = $txt['hc_basic_settings_desc'];
+	prepareDBSettingContext($general_settings);
 }
 
-function hc_saveGroupSettings() {
+function hc_saveBasicSettings() {
 	global $sourcedir;
 
 	isAllowedTo('admin_forum');
@@ -155,12 +142,12 @@ function hc_saveGroupSettings() {
 		$_POST['hc_group_ids'] = isset($_POST['hc_group_ids']) ? implode(',', $_POST['hc_group_ids']) : ' ';
 
 		$general_settings = array(
-			array('text', 'hc_group_ids')
+			array('check', 'hc_mod_enable'),
+			array('large_text', 'hc_custom_message'),
 		);
-
 		require_once($sourcedir . '/ManageServer.php');
 		saveDBSettings($general_settings);
-		redirectexit('action=admin;area=hidecodetags;sa=groupsettings');
+		redirectexit('action=admin;area=hidecodetags;sa=basicsettings');
 	}
 }
 

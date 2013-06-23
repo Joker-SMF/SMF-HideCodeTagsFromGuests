@@ -42,7 +42,8 @@ global $sourcedir, $smcFunc;
 
 $settingsInstalled = array(
     0 => 'hc_board_ids',
-    1 => 'hc_group_ids',
+    1 => 'hc_mod_enable',
+    2 => 'hc_custom_message',
 );
 
 $smcFunc['db_query']('', '

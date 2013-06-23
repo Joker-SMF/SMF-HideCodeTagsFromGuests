@@ -137,27 +137,41 @@ function template_hc_admin_board_setting_panel() {
 	// ]]></script>';
 }
 
-function template_hc_admin_group_setting_panel() {
+function template_hc_admin_basic_setting_panel() {
 	global $context, $txt, $scripturl;
 
 	template_rp_admin_info();
 
 	echo '
 	<div id="admincenter" class="hide_code">
-		<form action="'. $scripturl .'?action=admin;area=hidecodetags;sa=savegroupsettings" method="post" accept-charset="UTF-8">
+		<form action="'. $scripturl .'?action=admin;area=hidecodetags;sa=savebasicsettings" method="post" accept-charset="UTF-8">
 			<div class="windowbg2">
 				<span class="topslice"><span></span></span>';
 
-				foreach($context['hide_code_tag']['groups'] as $group_key => $group) {
+				foreach ($context['config_vars'] as $config_var) {
 					echo '
-					<div class="hct_group_box">';
+					<dl class="settings hct_settings">
+						<dt>
+							<span>'. $txt[$config_var['name']] .'</span>';
+							if (isset($config_var['subtext']) && !empty($config_var['subtext'])) {
+								echo '
+								<br /><span class="smalltext">', $config_var['subtext'] ,'</span>';
+							}
+						echo '
+						</dt>
+						<dd>';
+
+						if ($config_var['type'] == 'check')
+							echo '
+							<input type="checkbox" name="', $config_var['name'], '" id="', $config_var['name'], '"', ($config_var['value'] ? ' checked="checked"' : ''), ' value="1" class="input_check" />';
+
+						elseif ($config_var['type'] == 'large_text')
+							echo '
+							<textarea rows="4" cols="50" name="', $config_var['name'], '">', $config_var['value'], '</textarea>';
 
 						echo '
-						<input type="checkbox" id="', $group['id_group'], '" name="hc_group_ids[]"', (isset($group['is_selected']) && !empty($group['is_selected']) ? ' checked="checked"' : ''), ' value="', $group['id_group'],'" class="input_check" />
-						<span>', $group['group_name'], '</span>';
-
-					echo '
-					</div>';
+						</dd>
+					</dl>';
 				}
 
 				echo '

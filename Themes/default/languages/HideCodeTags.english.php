@@ -37,11 +37,12 @@ $txt['hc_general_desc'] = 'This is the admin panel for the Hide Code Tag mod.';
 
 $txt['hc_board_settings'] = 'Board Settings';
 $txt['hc_board_settings_desc'] = 'This section allows you to handle the board on which you want to activate the mod.';
-$txt['hc_group_settings'] = 'Member Group Settings';
-$txt['hc_group_settings_desc'] = 'This section allows you to enable/diable mod for different groups';
+$txt['hc_basic_settings'] = 'Basic Settings';
+$txt['hc_basic_settings_desc'] = 'This section allows you to customize as per your needs mod.';
 
 //Member permission strings
-$txt['hc_regular_members'] = 'Regular Members';
+$txt['hc_mod_enable'] = 'Enable the mod';
+$txt['hc_custom_message'] = 'Message to be shown to guests';
 
 $txt['hc_submit'] = 'Submit';
 

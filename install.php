@@ -38,9 +38,9 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 elseif (!defined('SMF'))
 	die('<b>Error:</b> Cannot uninstall - please verify you put this in the same place as SMF\'s index.php.');
 
-global $sourcedir, $modSettings;
+global $sourcedir, $modSettings, $scripturl;
 
-updateSettings(array('hc_board_ids' => ' ', 'hc_group_ids' => ' '));
+updateSettings(array('hc_board_ids' => ' ', 'hc_mod_enable' => 1, 'hc_custom_message' => 'Only registered users can see contents. Please click here to <a target="_blank" href="' . $scripturl . '?action=register">Register</a> or <a target="_blank" href="' . $scripturl . '?action=login">Login</a>.'));
 
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTagsHooks.php');
 add_integration_function('integrate_pre_include', '$sourcedir/HideCodeTags.php');
