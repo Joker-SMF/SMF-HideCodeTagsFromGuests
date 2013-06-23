@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /**
 * @package manifest file for Hide the content of [code] tags from guests
@@ -40,15 +41,28 @@
 
 	<file name="$sourcedir/Subs.php">
 		<operation>
+			<search position="before"><![CDATA[global $txt, $scripturl, $context, $modSettings, $user_info, $smcFunc]]></search>
+			<add><![CDATA[, $sourcedir;]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$codes = array(]]></search>
+			<add><![CDATA[if(isset($context['current_board'])) {
+            require_once($sourcedir . '/HideCodeTags.php');
+            $needToHide = needToHide($context['current_board'], 'hc_board_ids');
+        }
+
+        ]]></add>
+		</operation>
+		<operation>
 			<search position="replace"><![CDATA[				'content' => '<div class="codeheader">' . $txt['code'] . ': <a href="javascript:void(0);" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
 ]]></search>
-			<add><![CDATA[				'content' => $user_info['is_guest'] ? '<div class="codeheader">' . $txt['code'] . ': </div><code class="bbc_code">' . $txt['warning'] . ' ' . $txt['login_or_register'] . '</code>' :  '<div class="codeheader">' . $txt['code'] . ': <a href="javascript:void(0);" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
+			<add><![CDATA[				'content' => isset($needToHide) && !empty($needToHide) ? '<div class="codeheader">' . $txt['code'] . ': </div><code class="bbc_code">' . $txt['warning'] . ' ' . $txt['login_or_register'] . '</code>' :  '<div class="codeheader">' . $txt['code'] . ': <a href="javascript:void(0);" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
 ]]></add>
-		</operation>		
+		</operation>
 		<operation>
 			<search position="replace"><![CDATA[				'content' => '<div class="codeheader">' . $txt['code'] . ': ($2) <a href="#" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
 ]]></search>
-			<add><![CDATA[				'content' => $user_info['is_guest'] ? '<div class="codeheader">' . $txt['code'] . ': </div><code class="bbc_code">' . $txt['warning'] . ' ' . $txt['login_or_register'] . '</code>' :  '<div class="codeheader">' . $txt['code'] . ': ($2) <a href="#" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
+			<add><![CDATA[				'content' => isset($needToHide) && !empty($needToHide) ? '<div class="codeheader">' . $txt['code'] . ': </div><code class="bbc_code">' . $txt['warning'] . ' ' . $txt['login_or_register'] . '</code>' :  '<div class="codeheader">' . $txt['code'] . ': ($2) <a href="#" onclick="return smfSelectText(this);" class="codeoperation">' . $txt['code_select'] . '</a></div>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '<pre style="margin: 0; padding: 0;">' : '') . '<code class="bbc_code">$1</code>' . ($context['browser']['is_gecko'] || $context['browser']['is_opera'] ? '</pre>' : ''),
 ]]></add>
 		</operation>
 	</file>
