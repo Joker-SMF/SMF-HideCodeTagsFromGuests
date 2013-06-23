@@ -34,7 +34,7 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 function HideCodeTagsAdminPanel($return_config = false) {
-	global $txt, $context;
+	global $txt, $context, $settings;
 
 	/* I can has Adminz? */
 	isAllowedTo('admin_forum');
@@ -42,6 +42,8 @@ function HideCodeTagsAdminPanel($return_config = false) {
 
 	$context['page_title'] = $txt['hc_admin_panel'];
 	$default_action_func = 'hc_boardSettings';
+
+	$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] .  '/css/HideCodeTags.css" />';
 
 	$context[$context['admin_menu_name']]['tab_data'] = array(
 		'title' => $txt['hc_admin_panel'],

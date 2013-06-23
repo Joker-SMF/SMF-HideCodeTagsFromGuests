@@ -14,8 +14,8 @@
 		<require-file name="Sources/HideCodeTags.php" destination="$sourcedir">Controller of user interface</require-file>
 		<require-file name="Sources/Subs-HideCodeTags.php" destination="$sourcedir">Database handler</require-file>
 		<require-file name="Themes/default/HideCodeTags.template.php" destination="$themedir">Admin template</require-file>
+		<require-file name="Themes/default/css/HideCodeTags.css" destination="$themedir/css">CSS of mod</require-file>
 		<require-file name="Themes/default/languages/HideCodeTags.english.php" destination="$languagedir">All language Strings</require-file>
-		<require-file name="Themes/default/scripts/HideCodeTags.js" destination="$themedir/scripts">JS file of mod</require-file>
 		<code>install.php</code>
 		<modification>Modification.xml</modification>
 		<redirect url="?action=admin;area=hidecodetags" type="inline">Please stand by while you are being redirected to this modification's configuration settings.</redirect>
@@ -28,8 +28,8 @@
 		<remove-file name="$sourcedir/HideCodeTags.php" />
 		<remove-file name="$sourcedir/Subs-HideCodeTags.php" />
 		<remove-file name="$themedir/HideCodeTags.template.php" />
+		<remove-file name="$themedir/css/HideCodeTags.css" />
 		<remove-file name="$languagedir/HideCodeTags.english.php" />
-		<remove-file name="$themedir/scripts/HideCodeTags.js" />
 		<modification reverse="true">Modification.xml</modification>
 		<redirect url="$scripturl?action=admin;area=packages;sa=browse" timeout="1000" />		
 	</uninstall>

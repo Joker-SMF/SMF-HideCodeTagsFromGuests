@@ -75,16 +75,16 @@ function template_hc_admin_board_setting_panel() {
 
 				foreach($context['hc_board_setting_data'] as $category_key => $category) {
 					echo '
-					<div class="hc_category" style="padding: 0 15px; overflow: hidden; margin-bottom: 15px;">';
+					<div class="hct_category">';
 
 					echo '
-						<p style="padding: 0; margin: 4px 0 5px; font-weight: bold;">
-							<a style="padding: 2px; background: #fff; border: 1px solid #346; border-radius: 5px;" href="javascript:void(0)" id="', $category_key, '" onclick="selectBoards([', implode(', ', array_keys($category['boards'])), '], ', $category_key, '); return false;">', $category['name'], '</a>
+						<p class="hct_category_title">
+							<a href="javascript:void(0)" id="', $category_key, '" onclick="selectBoards([', implode(', ', array_keys($category['boards'])), '], ', $category_key, '); return false;">', $category['name'], '</a>
 						</p>';
 
 					foreach($category['boards'] as $board_key => $board) {
 						echo '
-						<div style="margin-left: 10px;">
+						<div class="board_desc">
 							<span>', $board['board_name'], '</span>
 							<input type="checkbox" id="board_', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />
 						</div>';
@@ -96,7 +96,7 @@ function template_hc_admin_board_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" style="margin-left: 15px;" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<input type="submit" class="submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>
@@ -150,7 +150,7 @@ function template_hc_admin_group_setting_panel() {
 
 				foreach($context['hide_code_tag']['groups'] as $group_key => $group) {
 					echo '
-					<div class="hc_category" style="padding: 0 15px;">';
+					<div class="hct_group_box">';
 
 						echo '
 						<input type="checkbox" id="', $group['id_group'], '" name="hc_group_ids[]"', (isset($group['is_selected']) && !empty($group['is_selected']) ? ' checked="checked"' : ''), ' value="', $group['id_group'],'" class="input_check" />
@@ -162,7 +162,7 @@ function template_hc_admin_group_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" style="margin-left: 15px;" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<input type="submit" class="submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>

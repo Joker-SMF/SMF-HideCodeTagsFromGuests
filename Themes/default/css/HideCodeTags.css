@@ -1,0 +1,33 @@
+.hct_category {
+    padding: 0 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.hct_category_title {
+    padding: 0;
+    margin: 4px 0 5px;
+    font-weight: bold;
+}
+
+.hct_category_title a {
+    padding: 2px;
+    background: #fff;
+    border: 1px solid #346;
+    border-radius: 5px;
+}
+
+.board_desc {
+    margin-left: 10px;
+    float: left;
+    position: relative;
+    width: 45%;
+}
+
+input.submit_button {
+    margin-left: 15px;
+}
+
+.hct_group_box {
+    padding: 0 15px;   
+}
