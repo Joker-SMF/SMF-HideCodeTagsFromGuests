@@ -39,7 +39,9 @@ function needToHide($boardId, $setting) {
     if($context['user']['is_logged']) return false;
 	$boards_to_hide = explode(',', $modSettings[$setting]);
 
-    if(in_array($boardId, $boards_to_hide)) return true;
+	$message = empty($modSettings['hc_custom_message']) ? $txt['warning'] . ' ' . $txt['login_or_register'] : $modSettings['hc_custom_message'];
+
+    if(in_array($boardId, $boards_to_hide)) return $message;
     else return false;
 }
 

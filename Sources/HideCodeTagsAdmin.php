@@ -65,6 +65,7 @@ function HideCodeTagsAdminPanel($return_config = false) {
 		'saveboardsettings' => 'hc_saveBoardSettings',
 		'basicsettings' => 'hc_basicSettings',
 		'savebasicsettings' => 'hc_saveBasicSettings',
+		'resetmodsettings' => 'hc_resetModSettings',
 	);
 
 	//wakey wakey, call the func you lazy
@@ -139,7 +140,6 @@ function hc_saveBasicSettings() {
 
 	if (isset($_POST['submit'])) {
 		checkSession();
-		$_POST['hc_group_ids'] = isset($_POST['hc_group_ids']) ? implode(',', $_POST['hc_group_ids']) : ' ';
 
 		$general_settings = array(
 			array('check', 'hc_mod_enable'),
@@ -149,6 +149,27 @@ function hc_saveBasicSettings() {
 		saveDBSettings($general_settings);
 		redirectexit('action=admin;area=hidecodetags;sa=basicsettings');
 	}
+}
+
+function hc_resetModSettings() {
+	global $sourcedir, $txt;
+
+	isAllowedTo('admin_forum');
+	loadLanguage('HideCodeTags');
+
+	$general_settings = array(
+		array('check', 'hc_mod_enable'),
+		array('large_text', 'hc_custom_message'),
+	);
+
+	$_POST = array(
+		'hc_mod_enable' => 1,
+		'hc_custom_message' => $txt['warning'] . ' ' . $txt['login_or_register']
+	);
+
+	require_once($sourcedir . '/ManageServer.php');
+	saveDBSettings($general_settings);
+	redirectexit('action=admin;area=hidecodetags;sa=basicsettings');
 }
 
 //Few utils for admin itself

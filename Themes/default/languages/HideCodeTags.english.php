@@ -45,5 +45,10 @@ $txt['hc_mod_enable'] = 'Enable the mod';
 $txt['hc_custom_message'] = 'Message to be shown to guests';
 
 $txt['hc_submit'] = 'Submit';
+$txt['hc_reset_mod_settings'] = 'Reset mod settings';
+$txt['hc_confirm_mod_setting_reset'] = 'Reset mod settings';
+
+$txt['hc_select_all'] = 'Select all boards';
+$txt['hc_deselect_all'] = 'Deselect all boards';
 
 ?>

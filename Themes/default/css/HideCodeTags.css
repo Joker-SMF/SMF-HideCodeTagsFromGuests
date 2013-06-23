@@ -24,8 +24,15 @@
     width: 45%;
 }
 
-input.submit_button {
-    margin: 15px 0 0 15px;
+.hc_submit_button {
+    margin: 30px 0 0 10px;
+    padding: 2px;
+    color: #000 !important;
+    background: #cde7ff url(../images/theme/submit_bg.png) no-repeat;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    font-weight: normal;
+    font: 95%/115% verdana, Helvetica, sans-serif;
 }
 
 .hct_settings {

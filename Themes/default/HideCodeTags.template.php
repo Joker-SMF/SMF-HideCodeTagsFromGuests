@@ -40,26 +40,23 @@ function template_rp_admin_info() {
 		</h3>
 	</div>
 	<p class="windowbg description">', isset($context['hide_code']['tab_desc']) ? $context['hide_code']['tab_desc'] : $txt['hc_general_desc'] ,'</p>';
-	
-	// The admin tabs.
-		echo '
+
+	echo '
 	<div id="adm_submenus">
 		<ul class="dropmenu">';
-	
-		// Print out all the items in this tab.
+
 		$menu_buttons = $context[$context['admin_menu_name']]['tab_data'];
-		foreach ($menu_buttons['tabs'] as $sa => $tab)
-		{
+		foreach ($menu_buttons['tabs'] as $sa => $tab) {
 			echo '
 			<li>
 				<a class="', ($menu_buttons['active_button'] == $tab['url']) ? 'active ' : '', 'firstlevel" href="', $scripturl, '?action=admin;area=hidecodetags;sa=', $tab['url'],'"><span class="firstlevel">', $tab['label'], '</span></a>
 			</li>';
 		}
-	
-		// the end of tabs
+
 		echo '
 		</ul>
-	</div><br class="clear" />';
+	</div>
+	<br class="clear" />';
 }
 
 function template_hc_admin_board_setting_panel() {
@@ -86,7 +83,7 @@ function template_hc_admin_board_setting_panel() {
 						echo '
 						<div class="board_desc">
 							<span>', $board['board_name'], '</span>
-							<input type="checkbox" id="board_', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check" />
+							<input type="checkbox" id="board_', $board['id_board'], '" name="hc_board_ids[]"', (isset($board['is_selected']) && !empty($board['is_selected']) ? ' checked="checked"' : ''), ' value="', $board['id_board'],'" class="input_check test hc_board_ids" />
 						</div>';
 					}
 
@@ -96,7 +93,8 @@ function template_hc_admin_board_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" class="submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<a class="hc_submit_button" id="select_all" onclick="selectAllBoards(\'hc_board_ids\'); return false">', $txt['hc_select_all'], '</a>
+				<input type="submit" class="hc_submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>
@@ -104,10 +102,11 @@ function template_hc_admin_board_setting_panel() {
 	
 		</form>
 	</div>
-	<br class="clear">';
+	<br class="clear" />';
 
 	echo '
 	<script type="text/javascript"><!-- // --><![CDATA[
+		//Joker shoots IE
 		if(!Array.indexOf){
 			Array.prototype.indexOf = function(input) {
 				for(var i = 0; i < this.length; i++) {
@@ -117,6 +116,14 @@ function template_hc_admin_board_setting_panel() {
 				}
 				return -1;
 			}
+		}
+
+		//This time joker bombs IE
+		if(!document.getElementsByClassName) {
+			document.getElementsByClassName = function(className) {
+				return this.querySelectorAll("." + className);
+			};
+			Element.prototype.getElementsByClassName = document.getElementsByClassName;
 		}
 
 		function selectBoards(ids, catId) {
@@ -132,6 +139,21 @@ function template_hc_admin_board_setting_panel() {
 			for (i = 0; i < ids.length; i++) {
 				if(!isChecked) document.getElementById("board_" + ids[i]).checked = true;
 				else document.getElementById("board_" + ids[i]).checked = false;
+			}
+		}
+
+		function selectAllBoards(id) {
+			var idArray = document.getElementsByClassName(id);
+			var isAllChecked = true;
+			for(i in idArray) {
+				if(idArray[i].checked == false) {
+					isAllChecked = false;
+					break;
+				}
+			}
+			for(i in idArray) {
+				if(isAllChecked) idArray[i].checked = false;
+				else idArray[i].checked = true;
 			}
 		}
 	// ]]></script>';
@@ -176,7 +198,8 @@ function template_hc_admin_basic_setting_panel() {
 
 				echo '
 				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-				<input type="submit" class="submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+				<a class="hc_submit_button" href="', $scripturl, '?action=admin;area=hidecodetags;sa=resetmodsettings;" onclick="return confirm(\'', $txt['hc_confirm_mod_setting_reset'], '?\');">', $txt['hc_reset_mod_settings'], '</a>
+				<input type="submit" class="hc_submit_button" name="submit" value="', $txt['hc_submit'], '" tabindex="', $context['tabindex']++, '" />';
 	
 				echo '
 				<span class="botslice"><span></span></span>
@@ -184,7 +207,7 @@ function template_hc_admin_basic_setting_panel() {
 	
 		</form>
 	</div>
-	<br class="clear">';
+	<br class="clear" />';
 }
 
 ?>
