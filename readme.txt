@@ -10,6 +10,8 @@ With the admin panel provided by the mod, an admin can:
 - Change the message to be shown to guests
 
 
+Note - By default none of the boards is selected, after installing the mod, please enable the mod on the boards as you desire.
+
 License
  * This SMF Modification is subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this SMF modification except in compliance with
