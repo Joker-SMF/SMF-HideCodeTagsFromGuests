@@ -4,7 +4,7 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /**
 * @package manifest file for Hide the content of [code] tags from guests
-* @version 1.1
+* @version 1.2
 * @author Joker (http://www.simplemachines.org/community/index.php?action=profile;u=226111)
 * @copyright Copyright (c) 2012, Siddhartha Gupta
 * @license http://www.mozilla.org/MPL/MPL-1.1.html
@@ -37,7 +37,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 
 	<id>Hide the content of [code] tags from guests</id>
-	<version>1.1</version>
+	<version>1.2</version>
 
 	<file name="$sourcedir/Subs.php">
 		<operation>

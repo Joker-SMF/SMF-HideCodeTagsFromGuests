@@ -1,6 +1,14 @@
-This mod will hide the content of code tags from guests. Instead of content of code tags guests will be shown a message saying -
+This mod will hide the content of code tags from guests.
+
+Instead of content of code tags, guests will be shown a default message saying -
 
 Only registered users can see contents. Please click here to Register or Login.
+
+With the admin panel provided by the mod, an admin can:
+- Enable/disable the mod
+- Select the boards on which mod should be enabled
+- Change the message to be shown to guests
+
 
 License
  * This SMF Modification is subject to the Mozilla Public License Version

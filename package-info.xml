@@ -4,7 +4,7 @@
 
 	<id>sid2varun:htcoctfg</id>
 	<name>Hide the content of [code] tags from guests</name>
-	<version>1.1</version>
+	<version>1.2</version>
 	<type>modification</type>
 
 	<install for="2.0 - 2.0.99">
