@@ -46,7 +46,7 @@
 		</operation>
 		<operation>
 			<search position="after"><![CDATA[$codes = array(]]></search>
-			<add><![CDATA[if(isset($context['current_board'])) {
+			<add><![CDATA[if(isset($modSettings['hc_mod_enable']) && !empty($modSettings['hc_mod_enable']) && isset($context['current_board'])) {
             require_once($sourcedir . '/HideCodeTags.php');
             $needToHide = needToHide($context['current_board'], 'hc_board_ids');
         }
